@@ -3,7 +3,7 @@
 ;; Copyright 2009, 2010 Kevin Ryde
 ;;
 ;; Author: Kevin Ryde <user42@zip.com.au>
-;; Version: 3
+;; Version: 4
 ;; Keywords: i18n
 ;; URL: http://user42.tuxfamily.org/perl-use-utf8-coding/index.html
 ;; EmacsWiki: PerlLanguage
@@ -48,6 +48,7 @@
 ;; Version 1 - the first version
 ;; Version 2 - fix defadvice ad-return-value test
 ;; Version 3 - undo defadvice on unload-feature
+;; Version 4 - allow for advice unloaded before us too
 
 ;;; Code:
 
@@ -159,6 +160,9 @@ See `perl-use-utf8-auto-coding-function' for details."
        (add-hook
         'perl-use-utf8-coding-unload-hook
         (lambda ()
+          ;; ad-find-advice not autoloaded, require 'advice it in
+          ;; case it was removed by `unload-feature'
+          (require 'advice)
           (when (ad-find-advice 'set-auto-coding 'around 'perl-use-utf8-coding)
             (ad-remove-advice   'set-auto-coding 'around 'perl-use-utf8-coding)
             (ad-activate        'set-auto-coding)))))
