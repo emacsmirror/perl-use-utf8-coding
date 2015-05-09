@@ -1,13 +1,13 @@
 ;;; perl-use-utf8-coding.el --- coding system from "use utf8" in perl code
 
-;; Copyright 2009, 2010 Kevin Ryde
+;; Copyright 2009, 2010, 2015 Kevin Ryde
 ;;
-;; Author: Kevin Ryde <user42@zip.com.au>
-;; Version: 4
-;; Keywords: i18n
+;; Author: Kevin Ryde <user42_kevin@yahoo.com.au>
+;; Version: 5
+;; Keywords: i18n, perl
 ;; URL: http://user42.tuxfamily.org/perl-use-utf8-coding/index.html
 ;; EmacsWiki: PerlLanguage
-;;
+
 ;; perl-use-utf8-coding.el is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as published
 ;; by the Free Software Foundation; either version 3, or (at your option)
@@ -49,6 +49,7 @@
 ;; Version 2 - fix defadvice ad-return-value test
 ;; Version 3 - undo defadvice on unload-feature
 ;; Version 4 - allow for advice unloaded before us too
+;; Version 5 - new email
 
 ;;; Code:
 
@@ -160,8 +161,8 @@ See `perl-use-utf8-auto-coding-function' for details."
        (add-hook
         'perl-use-utf8-coding-unload-hook
         (lambda ()
-          ;; ad-find-advice not autoloaded, require 'advice it in
-          ;; case it was removed by `unload-feature'
+          ;; ad-find-advice not autoloaded, so require 'advice in case it
+          ;; was removed by `unload-feature'
           (require 'advice)
           (when (ad-find-advice 'set-auto-coding 'around 'perl-use-utf8-coding)
             (ad-remove-advice   'set-auto-coding 'around 'perl-use-utf8-coding)
@@ -169,6 +170,8 @@ See `perl-use-utf8-auto-coding-function' for details."
 
       ;; what does xemacs have?
       )
+
+;; LocalWords: utf pragma docstring unindented Texinfo nroff ok el
 
 (provide 'perl-use-utf8-coding)
 
